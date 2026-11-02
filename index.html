@@ -1,0 +1,70 @@
+<!doctype html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta content="width=device-width, initial-scale=1.0" name="viewport">
+    <title>Contacts</title>
+    <link href="./css/normalize.css" rel="stylesheet">
+    <link href="./css/styles.css" rel="stylesheet">
+</head>
+<body>
+<header class="page-header">
+    <h1>Contacts</h1>
+    <nav aria-label="Contact actions">
+        <button class="add-contact-button" type="button">Add contact</button>
+        <button class="open-search-button" type="button">Search</button>
+        <button class="delete-all-button" type="button">Delete all</button>
+    </nav>
+</header>
+
+<main>
+    <section aria-label="Contact book" class="contacts-section">
+        <h2>Contact book</h2>
+        <p class="empty-state">No contacts yet. Add a contact to start your book.</p>
+        <div aria-label="Browse contacts by first letter" class="alphabet-index"></div>
+        <section aria-live="polite" class="selected-letter-section" hidden>
+            <h3 class="selected-letter-title"></h3>
+            <div class="contacts-list"></div>
+            <p class="letter-empty-state" hidden>No contacts under this letter yet.</p>
+        </section>
+    </section>
+</main>
+
+<dialog aria-label="Add or edit contact" class="contact-dialog">
+    <form class="contact-form">
+        <h2 class="contact-dialog-title">Add contact</h2>
+        <label>Name
+            <input autocomplete="name" class="contact-name" name="name" required type="text">
+        </label>
+
+        <label>Position
+            <input class="contact-position" name="position" required type="text">
+        </label>
+
+        <label>Phone
+            <input autocomplete="tel" class="contact-phone" name="phone" placeholder="+7 900 000-00-00" required
+                   type="tel">
+        </label>
+
+        <div>
+            <button class="cancel-contact-button" type="button">Cancel</button>
+            <button type="submit">Save</button>
+        </div>
+    </form>
+</dialog>
+
+<dialog aria-label="Search contacts" class="search-dialog">
+    <section>
+        <h2>Search contacts</h2>
+        <label>Name, position, or phone
+            <input autocomplete="off" class="search-input" type="search">
+        </label>
+        <p class="search-empty-state">Enter a search term.</p>
+        <div aria-live="polite" class="search-results"></div>
+        <button class="close-search-button" type="button">Close</button>
+    </section>
+</dialog>
+
+<script src="./js/main.js" type="module"></script>
+</body>
+</html>
