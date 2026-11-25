@@ -1,11 +1,22 @@
+import type { Contact } from './storage';
+
+interface BookElements {
+    alphabet: HTMLElement;
+    contactsList: HTMLElement;
+    selectedSection: HTMLElement;
+    selectedTitle: HTMLElement;
+    emptyState: HTMLElement;
+    letterEmptyState: HTMLElement;
+}
+
 const LETTERS = "ABCDEFGHIJKLMNOPQRSTUVWXYZ#";
 
-export function getLetter(contact) {
+export function getLetter(contact: Pick<Contact, 'name'>) {
     const firstLetter = contact.name.trim().charAt(0).toUpperCase();
     return LETTERS.includes(firstLetter) && firstLetter !== "#" ? firstLetter : "#";
 }
 
-function makeContactCard(contact) {
+function makeContactCard(contact: Contact) {
     const card = document.createElement("article");
     card.className = "contact-card";
     card.innerHTML = `
@@ -17,15 +28,15 @@ function makeContactCard(contact) {
             <button class="delete-contact-button" type="button">Delete</button>
         </div>
     `;
-    card.querySelector("h4").textContent = contact.name;
+    card.querySelector("h4")!.textContent = contact.name;
     card.querySelectorAll("p")[0].textContent = contact.position;
     card.querySelectorAll("p")[1].textContent = contact.phone;
-    card.querySelector(".edit-contact-button").dataset.id = contact.id;
-    card.querySelector(".delete-contact-button").dataset.id = contact.id;
+    card.querySelector<HTMLButtonElement>(".edit-contact-button")!.dataset.id = contact.id;
+    card.querySelector<HTMLButtonElement>(".delete-contact-button")!.dataset.id = contact.id;
     return card;
 }
 
-export function renderBook(contacts, selectedLetter, elements) {
+export function renderBook(contacts: Contact[], selectedLetter: string, elements: BookElements) {
     const { alphabet, contactsList, selectedSection, selectedTitle, emptyState, letterEmptyState } = elements;
     emptyState.hidden = contacts.length > 0;
     alphabet.replaceChildren();
@@ -53,7 +64,12 @@ export function renderBook(contacts, selectedLetter, elements) {
     matchingContacts.forEach((contact) => contactsList.append(makeContactCard(contact)));
 }
 
-export function renderSearch(contacts, query, results, emptyState) {
+export function renderSearch(
+    contacts: Contact[],
+    query: string,
+    results: HTMLElement,
+    emptyState: HTMLElement
+) {
     results.replaceChildren();
     query = query.trim().toLowerCase();
 
